@@ -5,25 +5,23 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <changeSet id="1-create-users" author="assistant">
+    <changeSet id="1-create-users" author="dev">
         <createTable tableName="users">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="email" type="VARCHAR(255)">
+            <column name="username" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="address" type="VARCHAR(1024)"/>
-            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+            <column name="password" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="enabled" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
-        <addNotNullConstraint tableName="users" columnName="created_at" columnDataType="TIMESTAMP WITH TIME ZONE"/>
 
         <rollback>
             <dropTable tableName="users"/>

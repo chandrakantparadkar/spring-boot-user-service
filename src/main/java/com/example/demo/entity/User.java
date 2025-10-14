@@ -16,28 +16,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(nullable = false, unique = true, length = 50)
+    private String username;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 255)
+    private String password; // plain text as requested
+
+    @Column(length = 255)
     private String email;
 
-    @Column
-    private String address;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private OffsetDateTime updatedAt;
-
-    @PrePersist
-    public void prePersist() {
-        createdAt = OffsetDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = OffsetDateTime.now();
-    }
+    @Column(nullable = false)
+    private Boolean enabled = true;
 }

@@ -6,6 +6,7 @@ import com.example.demo.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByName(String name) {
+        return  userRepository.findByUsername(name);
+    }
+
+    @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -36,4 +42,20 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public boolean verifyPassword(String username, String rawPassword) {
+        if (rawPassword == null || rawPassword.isBlank()) {
+            return false;
+        }
+
+        var userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) return false;
+
+        var user = userOpt.get();
+        if (!user.getEnabled()) return false;
+
+         return Objects.equals(rawPassword, user.getPassword());
+    }
+
 }

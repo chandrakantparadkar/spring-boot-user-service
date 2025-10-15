@@ -27,4 +27,15 @@ public class User {
 
     @Column(nullable = false)
     private Boolean enabled = true;
+
+
+    @Column(name = "roles", length = 1024)
+    private String roles; // e.g., "admin,report-viewer"
+
+    @Column(name = "groups", length = 1024)
+    private String groups; // e.g., "sales,india"
+
+    @Column(name = "permissions", length = 2048)
+    private String permissions; // e.g., "user.read,user.write"
+
 }
